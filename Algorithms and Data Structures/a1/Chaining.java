@@ -46,14 +46,47 @@ public class Chaining {
     /**Implements the hash function h(k)*/
     public int chain (int key) {
         // TODO: implement this and change the return statement
-        return -1;
+    	int hashKey = (this.A * key) % power2(this.w) >> (this.w - this.r);
+        return hashKey;
     }
         
     
     /**Inserts key k into hash table. Returns the number of collisions encountered*/
+    public boolean tableIsEmpty(int hashedKey) {
+    	if (Table.get(hashedKey).size() == 0) {
+    		return true;
+    	}
+    	return false;
+    }
+    
     public int insertKey(int key){
         //TODO: implement this and change the return statement
-        return -1;
+    	int hashedKey = chain(key);
+    	
+    	//cases
+    	//no slot
+    	//slot empty
+    	//slot not empty
+    	
+    	if(m == 0) {
+    		return -1;
+    	}
+//    	else if(this.Table.get(hashedKey).isEmpty()) {
+    	else if(tableIsEmpty(hashedKey)) {
+    		
+    		Table.get(hashedKey).add(key);
+    		return 0;
+    	}
+    	else {
+    		if(Table.get(hashedKey).contains(key)) {
+    			return Table.get(hashedKey).size();    			
+    		}
+    		else {
+    			Table.get(hashedKey).add(key);
+    			return Table.get(hashedKey).size();
+    		}
+    	}
+        
 
     }
 
