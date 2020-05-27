@@ -54,17 +54,40 @@ public class DisjointSets {
     
     /* find resentative of element i */
     public int find(int i) {
-
-        /* Fill this method (The statement return 0 is here only to compile) */
-        return 0;
-        
+    	if(par[i] == i) {
+    		return i;
+    	}
+    	else {
+//    		return find(p[i]);
+    		//we use path compression  
+    		//making parents of i to be find(par[i -> root
+    		par[i] = find(par[i]);
+    		return par[i];
+    	}
+    	        
     }
 
     /* merge sets containing elements i and j */
     public int union(int i, int j) {
-    
-        /* Fill this method (The statement return 0 is here only to compile) */
-        return 0;
+    	int rootI = find(i);
+    	int rootJ = find(j);
+    	if(rootI != rootJ) {
+    		if(rank[i] < rank[j]) {
+    			par[rootI] = rootJ;
+    			return rootJ;
+    		}
+    		else if(rank[i] > rank[j]) {
+    			par[rootJ] = rootI;
+    			return rootI;
+    		}
+    		else {
+    			par[rootI] = rootJ;
+    			rank[rootJ] ++;
+    			return rootJ;
+    		}
+    	}
+    	return rootJ;
+    	
         
     }
     

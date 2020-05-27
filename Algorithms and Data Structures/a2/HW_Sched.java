@@ -26,9 +26,25 @@ class Assignment implements Comparator<Assignment>{
 	@Override
 	public int compare(Assignment a1, Assignment a2) {
 		// TODO Implement this
+		if(a1.weight < a2.weight) {
+			return 1;
+		}
+		else if(a1.weight > a2.weight) {
+			return -1;
+		}
+		else {
+			//same weights
+			//because we are using greedy algorithm, we select the largest one first
+			if(a1.deadline < a2.deadline) {
+//				return -1;
+				return 1;
+			}
+			else {
+//				return 1;
+				return -1;
+			}
+		}
 		
-		
-		return 0;
 	}
 }
 
@@ -67,13 +83,17 @@ public class HW_Sched {
 		for (int i=0; i < homeworkPlan.length; ++i) {
 			homeworkPlan[i] = -1;
 		}
-		
-		
-		
-		
-		
-	
-		
+		//the assignments are ordered by weights
+		for(int i = 0; i < m; i++) {
+			//we are doing it as late as possible, to fit others 
+			for(int y = Assignments.get(i).deadline-1; y >= 0; y++) {
+				//if the spot is empty 
+				if(homeworkPlan[y] == -1) {
+					homeworkPlan[y] = Assignments.get(i).number;
+					break;
+				}
+			}
+		}
 		return homeworkPlan;
 	}
 }
