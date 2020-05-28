@@ -9,18 +9,40 @@ public class FordFulkerson {
 	
 	public static ArrayList<Integer> pathDFS(Integer source, Integer destination, WGraph graph){
 		ArrayList<Integer> Stack = new ArrayList<Integer>();
-		/* YOUR CODE GOES HERE
-		//
-		//
-		//
-		//
-		//
-		//
-		//
-		*/
+		// YOUR CODE GOES HERE
+		Stack<Integer> stackHelper = new Stack<Integer>();
+		HashSet<Integer> visited = new HashSet<Integer>();
+		
+		stackHelper.push(source);
+		while(true) {
+			if(stackHelper.peek() == destination) {
+				Stack.add(destination);
+				break;
+			}
+			Integer point = stackHelper.pop();
+			if(!visited.contains(point)) {
+				visited.add(point);
+				Stack.add(point);
+			}
+			ArrayList<Integer> adj = getAdjacents(point, graph, visited);
+			for(Integer a: adj) {
+				stackHelper.push(a);
+				Stack.add(a);
+			}
+		}
+		
 		return Stack;
 	}
-	
+	public static ArrayList<Integer> getAdjacents(int point, WGraph graph, HashSet<Integer> seen){
+		ArrayList<Integer> adj = new ArrayList<Integer>();
+		for(Edge e : graph.getEdges()) {
+			if(e.nodes[0] == point && e.weight != 0 && !seen.contains(e.nodes[1])) {
+				adj.add(e.nodes[1]); 
+			}
+		}
+
+		return adj;	
+	}
 	
 	
 	public static void fordfulkerson(Integer source, Integer destination, WGraph graph, String filePath){
